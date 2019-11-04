@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>听雪夜</title>
   
-  <subtitle>myBlog</subtitle>
+  
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yetingxue.github.io/"/>
