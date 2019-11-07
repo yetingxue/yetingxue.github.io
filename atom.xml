@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yetingxue.github.io/"/>
-  <updated>2019-11-07T07:54:53.171Z</updated>
+  <updated>2019-11-07T08:43:15.138Z</updated>
   <id>https://yetingxue.github.io/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>画江湖</title>
+    <link href="https://yetingxue.github.io/2019/11/07/%E7%94%BB%E6%B1%9F%E6%B9%96/"/>
+    <id>https://yetingxue.github.io/2019/11/07/画江湖/</id>
+    <published>2019-11-07T08:20:56.000Z</published>
+    <updated>2019-11-07T08:43:15.138Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;画江湖&quot;&gt;&lt;a href=&quot;#画江湖&quot; class=&quot;headerlink&quot; title=&quot;画江湖&quot;&gt;&lt;/a&gt;画江湖&lt;/h2&gt;&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;依山傍水房数间，&lt;br&gt;行也安然，&lt;br&gt;坐也安然。  &lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="爱诗意" scheme="https://yetingxue.github.io/categories/%E7%88%B1%E8%AF%97%E6%84%8F/"/>
+    
+    
+      <category term="画江湖" scheme="https://yetingxue.github.io/tags/%E7%94%BB%E6%B1%9F%E6%B9%96/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hexo</title>
     <link href="https://yetingxue.github.io/2019/11/01/MarkDown/"/>
     <id>https://yetingxue.github.io/2019/11/01/MarkDown/</id>
     <published>2019-11-01T05:37:34.000Z</published>
-    <updated>2019-11-07T07:54:53.171Z</updated>
+    <updated>2019-11-07T08:19:41.724Z</updated>
     
     <summary type="html">
     
@@ -30,6 +54,10 @@
     </summary>
     
     
+      <category term="World" scheme="https://yetingxue.github.io/categories/World/"/>
+    
+    
+      <category term="test" scheme="https://yetingxue.github.io/tags/test/"/>
     
   </entry>
   
@@ -50,9 +78,9 @@
       <category term="World" scheme="https://yetingxue.github.io/categories/World/"/>
     
     
-      <category term="hello world" scheme="https://yetingxue.github.io/tags/hello-world/"/>
-    
       <category term="test" scheme="https://yetingxue.github.io/tags/test/"/>
+    
+      <category term="hello world" scheme="https://yetingxue.github.io/tags/hello-world/"/>
     
   </entry>
   
