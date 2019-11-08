@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./js/bootstrap.min.css">
+    <script src="./js/jquery-3.3.1.js"></script>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-resource.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <title>test</title>
+    <style>
+        html,body{margin: 0;padding: 0;}
+        .header {
+            position: fixed;
+            background-color: #eee;
+            top: 0px;
+            width: 100%;
+            height: 40px;
+            z-index: 10;
+        }
+        .headerClear{
+            height: 40px;
+        }
+        .headerTitle {
+            display: block;
+            font-size: 18px;
+            width: 80px;
+            line-height: 40px;
+            text-align: center;
+        }
+        .center {
+            margin: auto;
+        }
+        .add {
+            display: block;
+            box-sizing: border-box;
+            border-radius: 20px;
+            border: 1px solid #000;
+            text-align:center;
+            position: absolute;
+            top:0px;
+            right:0px;
+            margin-top: 10px;
+            width:18px;
+            line-height:  16px;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+        .addbox {
+            float: right;
+            margin: 0 5px;
+           
+        }
+        .addbox:before {
+            margin-left:80px; 
+            display: block;
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 4px solid transparent; 
+            border-bottom: 4px solid #333; 
+            border-left: 4px solid #333; 
+            border-right: 4px solid transparent;
+            transform: rotate(135deg);
+            transform-origin:30% 70%;
+        }
+        .addbox ul {
+            padding: 10px 10px 10px 20px;
+            list-style-type: none;
+            background-color: #333;
+            width: 100px;
+            border-radius: 3px;
+        }
+        .addbox li{
+            padding:5px 0;
+        }
+        .addbox a{
+            color: #fff;
+        }
+        .homeContent {
+            margin-bottom: 50px;
+        }
+        .homeChat {
+            width: 100%;
+            background-color: #f9f9f9;
+        }
+        .icon {
+            float: left;
+            width: 42px;
+            height: 42px;
+            margin: 4px;
+            border-radius: 3px;
+        }
+        .personImg {
+            background: url(./imgs/tenlogo.jpg) -38px -30px;
+        }
+        .person {
+            margin-left:50px;
+            height: 50px;
+            border-bottom: 1px solid #ddd;
+        }
+        .personName {
+            box-sizing: content-box;
+            height: 20px;
+            padding: 5px 0 0 5px;
+        }
+        .personLastMsg {
+            padding-left: 5px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        .personMsgTime {
+            float: right;
+            padding: 20px 5px 0 0;
+            font-size: 12px;
+            transform: scale(0.8,0.8);
+            color: #aaa;
+        }
+        .menuSortTitle {
+            line-height: 50px;
+            margin-left: 50px;
+            padding-left: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .allpersontitle {
+            background-color: #eee;
+            padding: 5px 0 5px 15px;
+        }
+        .allPersonName {
+            line-height: 50px;
+            margin-left: 50px;
+            padding-left: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .footerMenu {
+            position: fixed;
+            background-color: #eee;
+            bottom: 0px;
+            border-top: 1px solid #ddd;
+            width: 100%;
+        }
+        .footerNav {
+            box-sizing: border-box;
+            display: inline-block;
+            text-align: center;
+            line-height: 40px;
+        }
+        .footerMenu a {
+            color:#000;
+        }
+        .color333 {background-color: #333}
+    </style>
+</head>
+<body>
+    <div class="" id="app">
+		<div class="" style="margin-bottom: 50px;">
+			<router-view></router-view>
+        </div>
+        <div class="footerMenu">
+            <span class="footerNav col-xs-3">
+                <router-link to="/home" class="link">聊天</router-link>
+            </span>
+            <span class="footerNav col-xs-3">
+                <router-link to="/menu" class="link">联系人</router-link>
+            </span>
+            <span class="footerNav col-xs-3">
+                <router-link to="/menu1" class="link">发现</router-link>
+            </span>
+            <span class="footerNav col-xs-3">
+                <router-link to="/mine" class="link">我</router-link>
+            </span>
+        </div>
+    </div>
+
+    <template id="home">
+        <div>
+            <div class="header">
+                <span class="headerTitle">聊天</span>
+                <span class="add" @click="addFlag=!addFlag">+</span>
+                <div class="addbox" v-show="addFlag">
+                    <ul>
+                        <li><a href="">添加朋友</a></li>
+                        <li><a href="">扫一扫</a></li>
+                        <li><a href="">查找</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="headerClear"></div>
+            <div class="homeContent">
+                <div class="homeChat" v-for="item in personMsg">
+                    <div class="personMsgTime"> {{ item.personMsgTime }} </div>
+                    <div class="icon personImg"></div>
+                    <div class="person">
+                        <div class="personName">{{ item.personName }}</div>
+                        <div class="personLastMsg">{{ item.personLastMsg }}</div>
+                    </div>
+                </div>
+                <!-- <div class="homeChat">
+                    <div class="personMsgTime">08:01</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">06:45</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div>
+                <div class="homeChat">
+                    <div class="personMsgTime">昨天</div>
+                    <div class="personImg"></div>
+                    <div class="person">
+                        <div class="personName">腾讯新闻</div>
+                        <div class="personLastMsg">一个小理念 让这个小山村实现绿色转换</div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </template>
+    <template id="menu">
+        <div>
+            <div class="header">
+                <span class="headerTitle">联系人</span>
+                <span class="add">+</span>
+            </div>
+            <div class="headerClear"></div>
+            <div class="menuContent">
+                <div>
+                    <div class="menusort">
+                        <div class="icon color333 friImg"></div>
+                        <div class="menuSortTitle">新的朋友</div>
+                    </div>
+                    <div class="menusort">
+                        <div class="icon color333 qunImg"></div>
+                        <div class="menuSortTitle">群聊</div>
+                    </div>
+                    <div class="menusort">
+                        <div class="icon color333 sortImg"></div>
+                        <div class="menuSortTitle">标签</div>
+                    </div>
+                    <div class="menusort">
+                        <div class="icon color333 gongImg"></div>
+                        <div class="menuSortTitle">公众号</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="allpersontitle">联系人</div>
+                    <div class="personList" v-for="item in personList">
+                        <div class="icon color333 Img"></div>
+                        <div class="allPersonName">{{item.name}} </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="menu1">
+        <div>
+            <div class="header">
+                <span class="headerTitle">发现</span>
+                <span class="add">+</span>
+            </div>
+            <div class="headerClear"></div>
+            <div class="menu1Content" style="background-color: #eee">
+                    <li style="list-style-type: none;background-color: #fff;margin-bottom: 8px;">
+                        <div class="" style="box-sizing:content-box;float: left; width: 45px;height: 45px;"></div>
+                        <div style="float: right;line-height:45px;margin-right: 20px;">></div>
+                        <div class="" style="line-height: 45px;">朋友圈</div>
+                    </li>
+                    <li style="list-style-type: none;background-color: #fff;">
+                        <div class="" style="box-sizing:content-box;float: left; width: 45px;height: 45px;"></div>
+                        <div style="float: right;line-height:45px;margin-right: 20px;">></div>
+                        <div class="" style="line-height: 45px;">扫一扫</div>
+                    </li>
+                    <li style="list-style-type: none;background-color: #fff;margin-bottom: 8px;">
+                        <div class="" style="box-sizing:content-box;float: left; width: 45px;height: 45px;"></div>
+                        <div style="float: right;line-height:45px;margin-right: 20px;">></div>
+                        <div class="" style="line-height: 45px;">摇一摇</div>
+                    </li>
+                    <li style="list-style-type: none;background-color: #fff;margin-bottom: 8px;">
+                        <div class="" style="box-sizing:content-box;float: left; width: 45px;height: 45px;"></div>
+                        <div style="float: right;line-height:45px;margin-right: 20px;">></div>
+                        <div class="" style="line-height: 45px;">看一看</div>
+                    </li>
+                    <li style="list-style-type: none;background-color: #fff;margin-bottom: 8px;">
+                        <div class="" style="box-sizing:content-box;float: left; width: 45px;height: 45px;"></div>
+                        <div style="float: right;line-height:45px;margin-right: 20px;">></div>
+                        <div class="" style="line-height: 45px;">附近的人</div>
+                    </li>
+                    <li style="list-style-type: none;background-color: #fff;margin-bottom: 8px;">
+                        <div class="" style="box-sizing:content-box;float: left; width: 45px;height: 45px;"></div>
+                        <div style="float: right;line-height:45px;margin-right: 20px;">></div>
+                        <div class="" style="line-height: 45px;">游戏</div>
+                    </li>
+                    <li style="list-style-type: none;background-color: #fff;margin-bottom: 8px;">
+                        <div class="" style="box-sizing:content-box;float: left; width: 45px;height: 45px;"></div>
+                        <div style="float: right;line-height:45px;margin-right: 20px;">></div>
+                        <div class="" style="line-height: 45px;">小程序</div>
+                    </li>
+                
+            </div>
+        </div>
+    </template>
+    <template id="mine">
+        <div>
+            <div class="header">
+                <span class="headerTitle center">我</span>
+            </div>
+            <div class="headerClear"></div>
+            <div class="mineContent">
+                <div class="mineName" style="padding: 15px;border-bottom:1px solid #eee;">
+                    <div class="" style="float: right;line-height:50px">></div>
+                    <div class="icon personImg"></div>
+                    <div class="person" style="border:0">
+                        <div class="personName">夜听雪</div>
+                        <div class="personLastMsg">微信号:12345678</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+    var home = {
+        template: '#home',
+        data:function(){
+            return {
+                addFlag:false,
+                personMsg:[
+                    {personName:'腾讯新闻', personLastMsg:'一个理念 让这个小山村实现绿色转换', personMsgTime:'08:01'},
+                    {personName:'订阅号消息', personLastMsg:'冲鸭冲鸭', personMsgTime:'08:00'},
+                    {personName:'京东白条', personLastMsg:'从未见过如此花钱之人', personMsgTime:'07:34'},
+                    {personName:'微信运动', personLastMsg:'[应用消息]', personMsgTime:'昨天'},
+               ],
+                
+            }
+            
+        }
+    }
+    var menu = {
+        template: '#menu',
+        data:function(){
+            return {
+                personList:[
+                    {name:'Alice'},{name:'Bob'},{name:'Candy'},{name:'Devid'},
+                    {name:'Ellen'},{name:'France'},{name:'Green'},{name:'Hubar'},
+                    {name:'Irik'},{name:'Jack'},{name:'Ken'},{name:'Lang'},
+                    {name:'Month'},{name:'Near'},{name:'Opera'},{name:'Pan'},
+                    {name:'Queen'},{name:'Ranbo'},{name:'Slice'},{name:'True'},
+                    {name:'Uno'},{name:'Vans'},{name:'Wow'},{name:'Xian'},
+                    {name:'Yellow'},{name:'Zoom'}
+                ],
+            }
+        }
+    }
+    var menu1 = {
+        template: '#menu1',
+    }
+    var mine = {
+        template: '#mine',
+    }
+    var router = new VueRouter({
+        routes: [
+        { path: '/home', component: home },
+        { path: '/menu', component: menu },
+        { path: '/menu1', component: menu1},
+        { path: '/mine', component: mine},
+        { path: '/', component: home }
+        ]
+    });
+
+    var app = new Vue({
+        router: router,
+        el:'#app',
+    }).$mount('#app')
+
+    </script>
+
+
+</body>
+</html>
